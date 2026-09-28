@@ -8,7 +8,7 @@ Build and run JUnit 5 tests with JDK 17+ and Maven:
 mvn clean package
 ```
 
-Run both report variants through a channel selected from the first argument:
+In IntelliJ, run `Assik3.Main` and enter a channel and destination in the Run console. You can also pass them as command-line arguments:
 
 ```sh
 java -jar target/software-design-patterns-1.0-SNAPSHOT.jar telegram "@match"
