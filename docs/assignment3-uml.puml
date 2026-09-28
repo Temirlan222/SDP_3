@@ -1,0 +1,61 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class MatchReport {
+  - channel: BroadcastChannel
+  # MatchReport(channel: BroadcastChannel)
+  # buildContent(): String
+  + publish(destination: String): void
+}
+class LiveMatchReport {
+  - teams: String
+  - score: String
+  - minute: String
+  - latestEvent: String
+  # buildContent(): String
+}
+class FinalMatchReport {
+  - teams: String
+  - finalScore: String
+  - winner: String
+  - summary: String
+  - highlights: String
+  # buildContent(): String
+}
+interface BroadcastChannel {
+  + name(): String
+  + publish(destination: String, content: String): void
+}
+class TelegramBroadcaster
+class InstagramBroadcaster
+class NewspaperBroadcasterAdapter {
+  - legacyNewspaper: OldNewspaperPress
+  + publish(destination: String, content: String): void
+}
+class BroadcastException <<exception>> {
+  + BroadcastException(message: String)
+  + BroadcastException(message: String, cause: Throwable)
+}
+class OldNewspaperPress {
+  + printArticle(article: String, sectionCode: int): int
+}
+class ChannelSelector {
+  + select(channelName: String): BroadcastChannel
+}
+class Main
+
+MatchReport <|-- LiveMatchReport
+MatchReport <|-- FinalMatchReport
+MatchReport o-- BroadcastChannel
+BroadcastChannel <|.. TelegramBroadcaster
+BroadcastChannel <|.. InstagramBroadcaster
+BroadcastChannel <|.. NewspaperBroadcasterAdapter
+NewspaperBroadcasterAdapter o-- OldNewspaperPress
+TelegramBroadcaster ..> BroadcastException : throws
+InstagramBroadcaster ..> BroadcastException : throws
+NewspaperBroadcasterAdapter ..> BroadcastException : translates
+ChannelSelector o-- BroadcastChannel
+Main ..> ChannelSelector
+Main ..> LiveMatchReport
+Main ..> FinalMatchReport
+@enduml
