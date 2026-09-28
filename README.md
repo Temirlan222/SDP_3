@@ -8,7 +8,7 @@ Build and run JUnit 5 tests with JDK 17+ and Maven:
 mvn clean package
 ```
 
-In IntelliJ, run `Assik3.Main` and enter a channel and destination in the Run console. You can also pass them as command-line arguments:
+In IntelliJ, open `pom.xml` as a Maven project (or choose **Add as Maven Project** for an already opened folder), then run `Assik3.Main` and enter a channel and destination in the Run console. Maven marks `resources` as a resource root; it contains the channel registrations required by `ServiceLoader`. In a plain Java IntelliJ project, mark `resources` as **Resources Root** before building. You can also pass them as command-line arguments:
 
 ```sh
 java -jar target/software-design-patterns-1.0-SNAPSHOT.jar telegram "@match"
